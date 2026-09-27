@@ -1,0 +1,2861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>Duofly</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --green:#00a884;
+  --darkgreen:#008069;
+  --bg:#efeae2;
+  --white:#fff;
+  --text:#111;
+  --muted:#667781;
+  --input:#f0f2f5;
+  --line:#e5e5e5;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+
+/* =========================
+   AUTH
+========================= */
+
+#authScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f0f2f5;
+  padding:20px;
+}
+
+.authBox{
+  width:100%;
+  max-width:400px;
+  background:#fff;
+  border-radius:9px;
+  padding:28px 22px;
+  box-shadow:0 3px 15px #0002;
+}
+
+.logo{
+  text-align:center;
+  font-size:42px;
+  margin-bottom:5px;
+}
+
+.authBox h1{
+  text-align:center;
+  color:var(--green);
+  margin-bottom:6px;
+}
+
+.authBox p{
+  text-align:center;
+  color:#606770;
+  font-size:14px;
+  margin-bottom:22px;
+}
+
+.googleBtn{
+  width:100%;
+  padding:14px;
+  border:1px solid #dadce0;
+  border-radius:7px;
+  background:white;
+  color:#202124;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+}
+
+.googleBtn:hover{
+  background:#f8f9fa;
+}
+
+.googleIcon{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.authMsg{
+  text-align:center;
+  color:#d32f2f;
+  font-size:13px;
+  margin-top:12px;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profilePhotoBox{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.profilePreview{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #ddd;
+}
+
+.photoBtn{
+  display:inline-block;
+  margin-top:9px;
+  padding:8px 14px;
+  border-radius:6px;
+  background:#e7f3ff;
+  color:#1877f2;
+  font-size:13px;
+}
+
+.inputGroup{
+  margin-bottom:13px;
+}
+
+.inputGroup input{
+  width:100%;
+  padding:14px;
+  border:1px solid #ccd0d5;
+  border-radius:7px;
+  outline:none;
+}
+
+.inputGroup input:focus{
+  border-color:var(--green);
+}
+
+.primaryBtn{
+  width:100%;
+  padding:14px;
+  border-radius:7px;
+  background:var(--green);
+  color:white;
+  font-weight:bold;
+}
+
+
+/* =========================
+   APP
+========================= */
+
+#app{
+  height:100vh;
+  max-width:900px;
+  margin:auto;
+  background:white;
+  display:flex;
+  flex-direction:column;
+}
+
+.topbar{
+  height:65px;
+  background:var(--green);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.brandLogo{
+  font-size:29px;
+}
+
+.brandName{
+  font-size:21px;
+  font-weight:bold;
+}
+
+.topActions{
+  display:flex;
+  gap:5px;
+}
+
+.iconBtn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:transparent;
+  color:white;
+  font-size:20px;
+}
+
+.iconBtn:active{
+  background:#ffffff22;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.searchBox{
+  padding:9px;
+  background:white;
+}
+
+.searchBox input{
+  width:100%;
+  padding:11px 15px;
+  border:0;
+  outline:0;
+  border-radius:22px;
+  background:var(--input);
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+.tabs{
+  height:48px;
+  display:flex;
+  background:white;
+  border-bottom:1px solid var(--line);
+}
+
+.tab{
+  flex:1;
+  background:white;
+  color:var(--muted);
+  font-weight:bold;
+}
+
+.tab.active{
+  color:var(--darkgreen);
+  border-bottom:3px solid var(--green);
+}
+
+
+/* =========================
+   CHAT LIST
+========================= */
+
+.content{
+  flex:1;
+  overflow:auto;
+  background:white;
+}
+
+.chatItem{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:12px 15px;
+  border-bottom:1px solid #eee;
+}
+
+.chatItem:active{
+  background:#f5f5f5;
+}
+
+.avatar{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  flex-shrink:0;
+}
+
+.chatInfo{
+  flex:1;
+  min-width:0;
+}
+
+.chatTop{
+  display:flex;
+  justify-content:space-between;
+}
+
+.chatName{
+  font-weight:bold;
+}
+
+.chatTime{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.lastMsg{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+#chatScreen{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+}
+
+.chatHeader{
+  height:65px;
+  background:var(--green);
+  color:white;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:0 8px;
+}
+
+.backBtn{
+  width:40px;
+  background:transparent;
+  color:white;
+  font-size:28px;
+}
+
+.chatUser{
+  flex:1;
+}
+
+.chatUser small{
+  display:block;
+  opacity:.8;
+  margin-top:3px;
+}
+
+.messages{
+  flex:1;
+  overflow:auto;
+  padding:15px;
+}
+
+.message{
+  max-width:78%;
+  padding:8px 10px;
+  margin:6px 0;
+  border-radius:10px;
+  line-height:1.4;
+  font-size:14px;
+  position:relative;
+}
+
+.received{
+  background:white;
+  margin-right:auto;
+}
+
+.sent{
+  background:#d9fdd3;
+  margin-left:auto;
+}
+
+.messageTime{
+  font-size:9px;
+  color:#667;
+  float:right;
+  margin:6px 0 0 8px;
+}
+
+.messageActions{
+  margin-top:5px;
+  font-size:11px;
+  color:#667781;
+}
+
+.messageActions button{
+  background:transparent;
+  margin-right:8px;
+}
+
+.replyBox{
+  background:#ffffff99;
+  border-left:3px solid var(--green);
+  padding:5px;
+  margin-bottom:5px;
+  font-size:11px;
+}
+
+.message img{
+  max-width:230px;
+  max-height:280px;
+  border-radius:8px;
+  display:block;
+}
+
+.messageBar{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:8px;
+  background:#f0f2f5;
+}
+
+.messageBar input{
+  flex:1;
+  padding:12px 15px;
+  border:0;
+  outline:0;
+  border-radius:22px;
+}
+
+.sendBtn{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:var(--green);
+  color:white;
+}
+
+.fileBtn{
+  width:40px;
+  height:40px;
+  background:transparent;
+  font-size:20px;
+}
+
+
+/* =========================
+   PROFILE PAGE
+========================= */
+
+.profilePage{
+  padding:25px 18px;
+}
+
+.profileHeader{
+  text-align:center;
+  padding:15px;
+}
+
+.profileHeader img{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.profileHeader h2{
+  margin-top:10px;
+}
+
+.profileHeader p{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.settingItem{
+  padding:16px;
+  border-bottom:1px solid #eee;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.settingItem span:first-child{
+  font-weight:bold;
+}
+
+
+/* =========================
+   NEW CHAT MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:#0007;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modalBox{
+  width:100%;
+  max-width:400px;
+  background:white;
+  border-radius:12px;
+  padding:20px;
+}
+
+.modalBox h2{
+  margin-bottom:15px;
+}
+
+.modalBox input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:7px;
+  margin-bottom:10px;
+}
+
+.modalActions{
+  display:flex;
+  gap:8px;
+}
+
+.modalActions button{
+  flex:1;
+  padding:11px;
+  border-radius:7px;
+}
+
+.cancelBtn{
+  background:#eee;
+}
+
+.searchUserBtn{
+  background:var(--green);
+  color:white;
+}
+
+.userResult{
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:1px solid #eee;
+  border-radius:8px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+  text-align:center;
+  padding:60px 20px;
+  color:var(--muted);
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark{
+  --bg:#111b21;
+  --white:#111b21;
+  --text:#e9edef;
+  --muted:#aebac1;
+  --input:#202c33;
+  --line:#253139;
+}
+
+body.dark #app,
+body.dark .content,
+body.dark .tabs,
+body.dark .tab,
+body.dark .searchBox{
+  background:#111b21;
+  color:#e9edef;
+}
+
+body.dark .chatItem{
+  border-color:#253139;
+}
+
+body.dark .message.received{
+  background:#202c33;
+  color:#e9edef;
+}
+
+body.dark .messageBar{
+  background:#202c33;
+}
+
+body.dark .messageBar input{
+  background:#2a3942;
+  color:white;
+}
+
+body.dark .settingItem{
+  border-color:#253139;
+}
+
+body.dark .modalBox{
+  background:#202c33;
+  color:white;
+}
+
+body.dark .modalBox input{
+  background:#2a3942;
+  color:white;
+  border-color:#394952;
+}
+
+body.dark .cancelBtn{
+  background:#394952;
+  color:white;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<section id="authScreen">
+
+  <div class="authBox">
+
+    <div class="logo">🦋</div>
+
+    <div id="loginStep">
+
+      <h1>Duofly</h1>
+
+      <p>
+        Connect with your friends on Duofly
+      </p>
+
+      <button
+        class="googleBtn"
+        id="googleLoginBtn">
+
+        <span class="googleIcon">
+          G
+        </span>
+
+        Continue with Google
+
+      </button>
+
+      <div
+        id="googleMsg"
+        class="authMsg">
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div
+      id="profileStep"
+      class="hidden">
+
+      <h1>Create Profile</h1>
+
+      <p>
+        Complete your Duofly profile
+      </p>
+
+      <div class="profilePhotoBox">
+
+        <img
+          id="profilePreview"
+          class="profilePreview"
+          src=""
+          alt="Profile">
+
+        <br>
+
+        <label class="photoBtn">
+
+          Add Photo
+
+          <input
+            id="photoInput"
+            type="file"
+            accept="image/*"
+            hidden>
+
+        </label>
+
+      </div>
+
+      <div class="inputGroup">
+
+        <input
+          id="nameInput"
+          maxlength="40"
+          placeholder="Full name">
+
+      </div>
+
+      <div class="inputGroup">
+
+        <input
+          id="usernameInput"
+          maxlength="20"
+          placeholder="Username">
+
+      </div>
+
+      <button
+        class="primaryBtn"
+        id="createProfileBtn">
+
+        Create Account
+
+      </button>
+
+      <div
+        id="profileMsg"
+        class="authMsg">
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<section
+  id="app"
+  class="hidden">
+
+  <header class="topbar">
+
+    <div class="brand">
+
+      <span class="brandLogo">
+        🦋
+      </span>
+
+      <span class="brandName">
+        Duofly
+      </span>
+
+    </div>
+
+    <div class="topActions">
+
+      <button
+        class="iconBtn"
+        onclick="showNewChat()">
+        ＋
+      </button>
+
+      <button
+        class="iconBtn"
+        onclick="toggleSearch()">
+        🔍
+      </button>
+
+      <button
+        class="iconBtn"
+        onclick="openProfile()">
+        ⋮
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <div
+    id="searchArea"
+    class="searchBox hidden">
+
+    <input
+      id="searchInput"
+      placeholder="Search chats...">
+
+  </div>
+
+
+  <nav class="tabs">
+
+    <button
+      class="tab active"
+      onclick="switchTab('chats',this)">
+      CHATS
+    </button>
+
+    <button
+      class="tab"
+      onclick="switchTab('updates',this)">
+      UPDATES
+    </button>
+
+    <button
+      class="tab"
+      onclick="switchTab('calls',this)">
+      CALLS
+    </button>
+
+  </nav>
+
+
+  <main
+    id="content"
+    class="content">
+  </main>
+
+</section>
+
+
+<!-- =====================================================
+     CHAT
+===================================================== -->
+
+<section
+  id="chatScreen"
+  class="hidden">
+
+  <header class="chatHeader">
+
+    <button
+      class="backBtn"
+      onclick="closeChat()">
+      ‹
+    </button>
+
+    <img
+      id="chatAvatar"
+      class="avatar"
+      src="">
+
+    <div class="chatUser">
+
+      <b id="chatName">
+        User
+      </b>
+
+      <small id="chatStatus">
+        offline
+      </small>
+
+    </div>
+
+    <button
+      class="iconBtn"
+      onclick="startCall('voice')">
+      📞
+    </button>
+
+    <button
+      class="iconBtn"
+      onclick="startCall('video')">
+      📹
+    </button>
+
+  </header>
+
+
+  <div
+    id="messages"
+    class="messages">
+  </div>
+
+
+  <div
+    id="typingIndicator"
+    style="
+      font-size:11px;
+      color:#667781;
+      padding:0 15px 5px;
+    ">
+  </div>
+
+
+  <div class="messageBar">
+
+    <button
+      class="fileBtn"
+      onclick="document.getElementById('imageInput').click()">
+      🖼️
+    </button>
+
+    <input
+      id="imageInput"
+      type="file"
+      accept="image/*"
+      hidden>
+
+    <button
+      class="fileBtn"
+      onclick="addEmoji()">
+      😊
+    </button>
+
+    <input
+      id="messageInput"
+      placeholder="Type a message...">
+
+    <button
+      class="sendBtn"
+      onclick="sendMessage()">
+      ➤
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEW CHAT MODAL
+===================================================== -->
+
+<div
+  id="newChatModal"
+  class="modal hidden">
+
+  <div class="modalBox">
+
+    <h2>
+      New Chat
+    </h2>
+
+    <input
+      id="usernameSearch"
+      placeholder="@username">
+
+    <div
+      id="userResult">
+    </div>
+
+    <div class="modalActions">
+
+      <button
+        class="cancelBtn"
+        onclick="closeNewChat()">
+        Cancel
+      </button>
+
+      <button
+        class="searchUserBtn"
+        onclick="searchUser()">
+        Search
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+  initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+  addDoc,
+  onSnapshot,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp,
+  orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+  apiKey:
+    "PASTE_API_KEY",
+
+  authDomain:
+    "PASTE_PROJECT_ID.firebaseapp.com",
+
+  projectId:
+    "PASTE_PROJECT_ID",
+
+  storageBucket:
+    "PASTE_STORAGE_BUCKET",
+
+  messagingSenderId:
+    "PASTE_MESSAGING_SENDER_ID",
+
+  appId:
+    "PASTE_APP_ID"
+
+};
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+const firebaseApp =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(firebaseApp);
+
+const db =
+  getFirestore(firebaseApp);
+
+const storage =
+  getStorage(firebaseApp);
+
+const googleProvider =
+  new GoogleAuthProvider();
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let currentChat = null;
+
+let currentChatUser = null;
+
+let selectedPhoto = null;
+
+let unsubscribeMessages = null;
+
+let typingTimer = null;
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text || "";
+
+  return div.innerHTML;
+
+}
+
+
+function chatIdFor(uid1,uid2){
+
+  return [uid1,uid2]
+    .sort()
+    .join("_");
+
+}
+
+
+/* =====================================================
+   GOOGLE LOGIN
+===================================================== */
+
+document
+  .getElementById("googleLoginBtn")
+  .addEventListener(
+    "click",
+    async () => {
+
+      const msg =
+        document.getElementById(
+          "googleMsg"
+        );
+
+      msg.textContent = "";
+
+      try{
+
+        await signInWithPopup(
+          auth,
+          googleProvider
+        );
+
+      }catch(error){
+
+        console.error(error);
+
+        msg.textContent =
+          error.message ||
+          "Google login failed.";
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if(!user){
+
+      currentUser = null;
+
+      document
+        .getElementById("authScreen")
+        .classList
+        .remove("hidden");
+
+      document
+        .getElementById("app")
+        .classList
+        .add("hidden");
+
+      return;
+
+    }
+
+
+    currentUser =
+      user;
+
+
+    const userRef =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
+
+
+    const snap =
+      await getDoc(
+        userRef
+      );
+
+
+    if(snap.exists()){
+
+      currentProfile =
+        snap.data();
+
+
+      localStorage.setItem(
+        "duoflyProfile",
+        JSON.stringify(
+          currentProfile
+        )
+      );
+
+
+      document
+        .getElementById("authScreen")
+        .classList
+        .add("hidden");
+
+
+      document
+        .getElementById("app")
+        .classList
+        .remove("hidden");
+
+
+      renderChats();
+
+      updatePresence();
+
+    }else{
+
+      document
+        .getElementById("loginStep")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("profileStep")
+        .classList
+        .remove("hidden");
+
+
+      document
+        .getElementById("nameInput")
+        .value =
+        user.displayName || "";
+
+
+      if(user.photoURL){
+
+        document
+          .getElementById("profilePreview")
+          .src =
+          user.photoURL;
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   PHOTO
+===================================================== */
+
+document
+  .getElementById("photoInput")
+  .addEventListener(
+    "change",
+    event => {
+
+      const file =
+        event.target.files[0];
+
+      if(!file)
+        return;
+
+      selectedPhoto =
+        file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+      () => {
+
+        document
+          .getElementById(
+            "profilePreview"
+          )
+          .src =
+          reader.result;
+
+      };
+
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+
+/* =====================================================
+   CREATE PROFILE
+===================================================== */
+
+document
+  .getElementById("createProfileBtn")
+  .addEventListener(
+    "click",
+    async () => {
+
+      const name =
+        document
+          .getElementById("nameInput")
+          .value
+          .trim();
+
+
+      const username =
+        document
+          .getElementById("usernameInput")
+          .value
+          .trim()
+          .toLowerCase()
+          .replace(
+            /[^a-z0-9_]/g,
+            ""
+          );
+
+
+      const msg =
+        document
+          .getElementById("profileMsg");
+
+
+      msg.textContent = "";
+
+
+      if(name.length < 2){
+
+        msg.textContent =
+          "Enter your name.";
+
+        return;
+
+      }
+
+
+      if(username.length < 3){
+
+        msg.textContent =
+          "Username must be at least 3 characters.";
+
+        return;
+
+      }
+
+
+      try{
+
+        const q =
+          query(
+            collection(
+              db,
+              "users"
+            ),
+            where(
+              "username",
+              "==",
+              username
+            )
+          );
+
+
+        const result =
+          await getDocs(q);
+
+
+        if(!result.empty){
+
+          msg.textContent =
+            "Username already taken.";
+
+          return;
+
+        }
+
+
+        let photoURL =
+          currentUser.photoURL ||
+          (
+            "https://ui-avatars.com/api/?name="
+            +
+            encodeURIComponent(name)
+            +
+            "&background=00a884&color=fff"
+          );
+
+
+        if(selectedPhoto){
+
+          const photoRef =
+            ref(
+              storage,
+              "profilePhotos/"
+              +
+              currentUser.uid
+              +
+              "/profile.jpg"
+            );
+
+
+          await uploadBytes(
+            photoRef,
+            selectedPhoto
+          );
+
+
+          photoURL =
+            await getDownloadURL(
+              photoRef
+            );
+
+        }
+
+
+        const profile = {
+
+          uid:
+            currentUser.uid,
+
+          email:
+            currentUser.email || "",
+
+          name:
+            name,
+
+          username:
+            username,
+
+          photoURL:
+            photoURL,
+
+          createdAt:
+            serverTimestamp(),
+
+          online:
+            true,
+
+          lastSeen:
+            serverTimestamp()
+
+        };
+
+
+        await setDoc(
+          userRefSafe(currentUser.uid),
+          profile
+        );
+
+
+        currentProfile =
+          profile;
+
+
+        localStorage.setItem(
+          "duoflyProfile",
+          JSON.stringify(profile)
+        );
+
+
+        document
+          .getElementById("authScreen")
+          .classList
+          .add("hidden");
+
+
+        document
+          .getElementById("app")
+          .classList
+          .remove("hidden");
+
+
+        renderChats();
+
+      }catch(error){
+
+        console.error(error);
+
+        msg.textContent =
+          error.message ||
+          "Profile creation failed.";
+
+      }
+
+    }
+  );
+
+
+function userRefSafe(uid){
+
+  return doc(
+    db,
+    "users",
+    uid
+  );
+
+}
+
+
+/* =====================================================
+   PRESENCE
+===================================================== */
+
+async function updatePresence(){
+
+  if(!currentUser)
+    return;
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "users",
+        currentUser.uid
+      ),
+      {
+        online:true,
+        lastSeen:serverTimestamp()
+      }
+    );
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    if(currentUser){
+
+      updateDoc(
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        ),
+        {
+          online:false,
+          lastSeen:serverTimestamp()
+        }
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   CHAT ID
+===================================================== */
+
+function getChatId(){
+
+  return chatIdFor(
+    currentUser.uid,
+    currentChatUser.uid
+  );
+
+}
+
+
+/* =====================================================
+   OPEN CHAT
+===================================================== */
+
+window.openRealChat =
+function(user){
+
+  currentChatUser =
+    user;
+
+  currentChat =
+    getChatId();
+
+
+  document
+    .getElementById("chatName")
+    .textContent =
+    user.name;
+
+
+  document
+    .getElementById("chatAvatar")
+    .src =
+    user.photoURL;
+
+
+  document
+    .getElementById("chatScreen")
+    .classList
+    .remove("hidden");
+
+
+  loadRealtimeMessages();
+
+};
+
+
+/* =====================================================
+   CLOSE CHAT
+===================================================== */
+
+window.closeChat =
+function(){
+
+  document
+    .getElementById("chatScreen")
+    .classList
+    .add("hidden");
+
+
+  if(unsubscribeMessages){
+
+    unsubscribeMessages();
+
+    unsubscribeMessages =
+      null;
+
+  }
+
+};
+
+
+/* =====================================================
+   REALTIME MESSAGES
+===================================================== */
+
+function loadRealtimeMessages(){
+
+  const messages =
+    document.getElementById(
+      "messages"
+    );
+
+
+  if(unsubscribeMessages){
+
+    unsubscribeMessages();
+
+  }
+
+
+  const messagesRef =
+    collection(
+      db,
+      "chats",
+      currentChat,
+      "messages"
+    );
+
+
+  const q =
+    query(
+      messagesRef,
+      orderBy(
+        "createdAt",
+        "asc"
+      )
+    );
+
+
+  unsubscribeMessages =
+    onSnapshot(
+      q,
+      snapshot => {
+
+        messages.innerHTML =
+          "";
+
+
+        snapshot.forEach(
+          item => {
+
+            renderMessage(
+              item.id,
+              item.data()
+            );
+
+          }
+        );
+
+
+        messages.scrollTop =
+          messages.scrollHeight;
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   RENDER MESSAGE
+===================================================== */
+
+function renderMessage(
+  id,
+  data
+){
+
+  const messages =
+    document.getElementById(
+      "messages"
+    );
+
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  const mine =
+    data.senderId ===
+    currentUser.uid;
+
+
+  div.className =
+    "message "
+    +
+    (
+      mine
+      ? "sent"
+      : "received"
+    );
+
+
+  let html = "";
+
+
+  if(data.replyText){
+
+    html += `
+
+      <div class="replyBox">
+
+        ${escapeHTML(
+          data.replyText
+        )}
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(data.type === "image"){
+
+    html += `
+
+      <img
+        src="${escapeHTML(
+          data.imageURL
+        )}"
+        alt="Image">
+
+    `;
+
+  }else{
+
+    html +=
+      escapeHTML(
+        data.text
+      );
+
+  }
+
+
+  const time =
+    data.createdAt &&
+    data.createdAt.toDate
+      ? data.createdAt
+          .toDate()
+          .toLocaleTimeString(
+            [],
+            {
+              hour:"2-digit",
+              minute:"2-digit"
+            }
+          )
+      : "";
+
+
+  html += `
+
+    <span class="messageTime">
+      ${time}
+      ${mine ? " ✓✓" : ""}
+    </span>
+
+  `;
+
+
+  html += `
+
+    <div class="messageActions">
+
+      <button
+        onclick="replyMessage(
+          '${escapeHTML(
+            data.text || "Image"
+          )}'
+        )">
+        ↩ Reply
+      </button>
+
+      <button
+        onclick="reactMessage(
+          '${id}'
+        )">
+        ❤️
+      </button>
+
+      ${
+        mine
+        ? `
+          <button
+            onclick="deleteMessage(
+              '${id}'
+            )">
+            🗑
+          </button>
+        `
+        : ""
+      }
+
+    </div>
+
+  `;
+
+
+  div.innerHTML =
+    html;
+
+
+  messages.appendChild(
+    div
+  );
+
+}
+
+
+/* =====================================================
+   SEND TEXT
+===================================================== */
+
+window.sendMessage =
+async function(){
+
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+
+  const text =
+    input.value.trim();
+
+
+  if(!text ||
+     !currentChatUser)
+    return;
+
+
+  const messagesRef =
+    collection(
+      db,
+      "chats",
+      currentChat,
+      "messages"
+    );
+
+
+  const reply =
+    input.dataset.replyText ||
+    "";
+
+
+  await addDoc(
+    messagesRef,
+    {
+
+      senderId:
+        currentUser.uid,
+
+      receiverId:
+        currentChatUser.uid,
+
+      text:
+        text,
+
+      type:
+        "text",
+
+      replyText:
+        reply,
+
+      createdAt:
+        serverTimestamp()
+
+    }
+  );
+
+
+  input.value =
+    "";
+
+  input.dataset.replyText =
+    "";
+
+};
+
+
+/* =====================================================
+   IMAGE MESSAGE
+===================================================== */
+
+document
+  .getElementById("imageInput")
+  .addEventListener(
+    "change",
+    async event => {
+
+      const file =
+        event.target.files[0];
+
+
+      if(!file ||
+         !currentChatUser)
+        return;
+
+
+      try{
+
+        const fileRef =
+          ref(
+            storage,
+            "chatImages/"
+            +
+            currentChat
+            +
+            "/"
+            +
+            Date.now()
+            +
+            "_"
+            +
+            file.name
+          );
+
+
+        await uploadBytes(
+          fileRef,
+          file
+        );
+
+
+        const imageURL =
+          await getDownloadURL(
+            fileRef
+          );
+
+
+        await addDoc(
+          collection(
+            db,
+            "chats",
+            currentChat,
+            "messages"
+          ),
+          {
+
+            senderId:
+              currentUser.uid,
+
+            receiverId:
+              currentChatUser.uid,
+
+            type:
+              "image",
+
+            imageURL:
+              imageURL,
+
+            text:
+              "Image",
+
+            createdAt:
+              serverTimestamp()
+
+          }
+        );
+
+
+      }catch(error){
+
+        console.error(error);
+
+        alert(
+          "Image upload failed."
+        );
+
+      }
+
+
+      event.target.value =
+        "";
+
+    }
+  );
+
+
+/* =====================================================
+   DELETE MESSAGE
+===================================================== */
+
+window.deleteMessage =
+async function(id){
+
+  if(!currentChat)
+    return;
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "chats",
+        currentChat,
+        "messages",
+        id
+      )
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+
+/* =====================================================
+   REACTION
+===================================================== */
+
+window.reactMessage =
+async function(id){
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "chats",
+        currentChat,
+        "messages",
+        id
+      ),
+      {
+        reaction:"❤️"
+      }
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+
+/* =====================================================
+   REPLY
+===================================================== */
+
+window.replyMessage =
+function(text){
+
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+
+  input.dataset.replyText =
+    text;
+
+
+  input.placeholder =
+    "Replying to: "
+    +
+    text.substring(
+      0,
+      30
+    );
+
+
+  input.focus();
+
+};
+
+
+/* =====================================================
+   EMOJI
+===================================================== */
+
+window.addEmoji =
+function(){
+
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+
+  input.value +=
+    " 😊";
+
+
+  input.focus();
+
+};
+
+
+/* =====================================================
+   TYPING
+===================================================== */
+
+document
+  .getElementById("messageInput")
+  .addEventListener(
+    "input",
+    () => {
+
+      if(!currentChatUser)
+        return;
+
+
+      clearTimeout(
+        typingTimer
+      );
+
+
+      typingTimer =
+        setTimeout(
+          () => {},
+          800
+        );
+
+    }
+  );
+
+
+/* =====================================================
+   NEW CHAT
+===================================================== */
+
+window.showNewChat =
+function(){
+
+  document
+    .getElementById(
+      "newChatModal"
+    )
+    .classList
+    .remove("hidden");
+
+};
+
+
+window.closeNewChat =
+function(){
+
+  document
+    .getElementById(
+      "newChatModal"
+    )
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById(
+      "userResult"
+    )
+    .innerHTML =
+    "";
+
+};
+
+
+/* =====================================================
+   USER SEARCH
+===================================================== */
+
+window.searchUser =
+async function(){
+
+  const username =
+    document
+      .getElementById(
+        "usernameSearch"
+      )
+      .value
+      .trim()
+      .toLowerCase()
+      .replace(
+        /^@/,
+        ""
+      );
+
+
+  const result =
+    document.getElementById(
+      "userResult"
+    );
+
+
+  result.innerHTML =
+    "Searching...";
+
+
+  if(!username){
+
+    result.innerHTML =
+      "Enter username.";
+
+    return;
+
+  }
+
+
+  try{
+
+    const q =
+      query(
+        collection(
+          db,
+          "users"
+        ),
+        where(
+          "username",
+          "==",
+          username
+        )
+      );
+
+
+    const snap =
+      await getDocs(q);
+
+
+    if(snap.empty){
+
+      result.innerHTML =
+        "User not found.";
+
+      return;
+
+    }
+
+
+    const data =
+      snap.docs[0].data();
+
+
+    if(
+      data.uid ===
+      currentUser.uid
+    ){
+
+      result.innerHTML =
+        "This is your own account.";
+
+      return;
+
+    }
+
+
+    result.innerHTML = `
+
+      <div
+        class="userResult"
+        id="foundUser">
+
+        <img
+          class="avatar"
+          src="${escapeHTML(
+            data.photoURL
+          )}">
+
+        <div>
+
+          <b>
+            ${escapeHTML(
+              data.name
+            )}
+          </b>
+
+          <div>
+            @${escapeHTML(
+              data.username
+            )}
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    document
+      .getElementById(
+        "foundUser"
+      )
+      .onclick =
+      () => {
+
+        closeNewChat();
+
+        openRealChat(
+          data
+        );
+
+      };
+
+
+  }catch(error){
+
+    console.error(error);
+
+    result.innerHTML =
+      "Search failed.";
+
+  }
+
+};
+
+
+/* =====================================================
+   RENDER CHAT LIST
+===================================================== */
+
+window.renderChats =
+function(){
+
+  const content =
+    document.getElementById(
+      "content"
+    );
+
+
+  content.innerHTML = `
+
+    <div class="empty">
+
+      <h2>
+        🦋 Duofly
+      </h2>
+
+      <p>
+        Tap ＋ to find someone by username
+        and start a real chat.
+      </p>
+
+    </div>
+
+  `;
+
+};
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+window.switchTab =
+function(
+  tab,
+  button
+){
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(
+      x =>
+        x.classList
+         .remove("active")
+    );
+
+
+  button
+    .classList
+    .add("active");
+
+
+  const content =
+    document.getElementById(
+      "content"
+    );
+
+
+  if(tab === "chats"){
+
+    renderChats();
+
+  }
+
+
+  if(tab === "updates"){
+
+    content.innerHTML = `
+
+      <div class="empty">
+
+        <h2>
+          Updates
+        </h2>
+
+        <p>
+          Status system can be connected here.
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(tab === "calls"){
+
+    content.innerHTML = `
+
+      <div class="empty">
+
+        <h2>
+          Calls
+        </h2>
+
+        <p>
+          Call history will appear here.
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+};
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+window.toggleSearch =
+function(){
+
+  document
+    .getElementById(
+      "searchArea"
+    )
+    .classList
+    .toggle("hidden");
+
+};
+
+
+document
+  .getElementById(
+    "searchInput"
+  )
+  .addEventListener(
+    "input",
+    () => {
+
+      /*
+        Real chat list search
+        can be connected after
+        chat-list collection is added.
+      */
+
+    }
+  );
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+window.openProfile =
+function(){
+
+  const profile =
+    currentProfile ||
+    JSON.parse(
+      localStorage.getItem(
+        "duoflyProfile"
+      )
+      ||
+      "{}"
+    );
+
+
+  document
+    .getElementById(
+      "content"
+    )
+    .innerHTML = `
+
+      <div class="profilePage">
+
+        <div class="profileHeader">
+
+          <img
+            src="${escapeHTML(
+              profile.photoURL || ""
+            )}">
+
+          <h2>
+            ${escapeHTML(
+              profile.name ||
+              "Duofly User"
+            )}
+          </h2>
+
+          <p>
+            @${escapeHTML(
+              profile.username ||
+              "username"
+            )}
+          </p>
+
+        </div>
+
+
+        <div class="settingItem">
+
+          <span>
+            📧 Email
+          </span>
+
+          <span>
+            ${escapeHTML(
+              profile.email ||
+              ""
+            )}
+          </span>
+
+        </div>
+
+
+        <div
+          class="settingItem"
+          onclick="toggleDarkMode()">
+
+          <span>
+            🌙 Dark Mode
+          </span>
+
+          <span>
+            ›
+          </span>
+
+        </div>
+
+
+        <div
+          class="settingItem"
+          onclick="showStarred()">
+
+          <span>
+            ⭐ Starred Messages
+          </span>
+
+          <span>
+            ›
+          </span>
+
+        </div>
+
+
+        <div
+          class="settingItem"
+          onclick="logout()"
+          style="color:#d32f2f">
+
+          <span>
+            🚪 Logout
+          </span>
+
+          <span>
+            ›
+          </span>
+
+        </div>
+
+      </div>
+
+    `;
+
+};
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+window.toggleDarkMode =
+function(){
+
+  document.body
+    .classList
+    .toggle("dark");
+
+
+  localStorage.setItem(
+    "duoflyDark",
+    document.body
+      .classList
+      .contains("dark")
+  );
+
+};
+
+
+if(
+  localStorage.getItem(
+    "duoflyDark"
+  )
+  ===
+  "true"
+){
+
+  document.body
+    .classList
+    .add("dark");
+
+}
+
+
+/* =====================================================
+   STARRED
+===================================================== */
+
+window.showStarred =
+function(){
+
+  document
+    .getElementById(
+      "content"
+    )
+    .innerHTML = `
+
+      <div class="empty">
+
+        <h2>
+          ⭐ Starred Messages
+        </h2>
+
+        <p>
+          Starred messages will appear here.
+        </p>
+
+      </div>
+
+    `;
+
+};
+
+
+/* =====================================================
+   WEBRTC CALL FOUNDATION
+===================================================== */
+
+let localStream =
+  null;
+
+let peerConnection =
+  null;
+
+
+const rtcConfig = {
+
+  iceServers:[
+    {
+      urls:
+        "stun:stun.l.google.com:19302"
+    }
+  ]
+
+};
+
+
+window.startCall =
+async function(type){
+
+  try{
+
+    const constraints =
+      type === "video"
+      ? {
+          audio:true,
+          video:true
+        }
+      : {
+          audio:true,
+          video:false
+        };
+
+
+    localStream =
+      await navigator
+        .mediaDevices
+        .getUserMedia(
+          constraints
+        );
+
+
+    peerConnection =
+      new RTCPeerConnection(
+        rtcConfig
+      );
+
+
+    localStream
+      .getTracks()
+      .forEach(
+        track => {
+
+          peerConnection
+            .addTrack(
+              track,
+              localStream
+            );
+
+        }
+      );
+
+
+    alert(
+      type === "video"
+      ? "Video call started."
+      : "Voice call started."
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Camera/microphone permission is required."
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+window.logout =
+async function(){
+
+  try{
+
+    if(localStream){
+
+      localStream
+        .getTracks()
+        .forEach(
+          track =>
+            track.stop()
+        );
+
+    }
+
+
+    await signOut(
+      auth
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+</script>
+
+</body>
+
+  </html>
